@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Outrage Esport - PUBG Roster</title>
+
+    <style>
+        /* =========================
+           BASIC RESET & STYLES
+        ========================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            width: 100%;
+            min-height: 100%;
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: #08080c;
+            color: #fff;
+        }
+
+        /* =========================
+           PAGE CONTAINER & BG
+        ========================== */
+        .page-container {
+            position: relative;
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            background-image: url("background.png");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        @media (max-width: 768px) {
+            .page-container {
+                background-image: url("background-mobile.png");
+            }
+        }
+
+        /* Tactical dark camouflage overlay */
+        .overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(8, 8, 12, 0.85) 0%, rgba(20, 15, 10, 0.75) 100%);
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        /* =========================
+           TOP LOGO & NAV
+        ========================== */
+        .logo-container {
+            position: relative;
+            top: 14px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        .logo {
+            width: min(140px, 35vw);
+            max-width: 140px;
+            height: auto;
+            filter: drop-shadow(0 4px 24px rgba(0, 0, 0, 0.5));
+        }
+
+        .menu-container {
+            position: fixed;
+            left: 20px;
+            top: 58px;
+            z-index: 50;
+        }
+
+        .menu-toggle {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            width: 44px;
+            height: 44px;
+            background: rgba(8, 8, 12, 0.72);
+            border: 1px solid rgba(255, 255, 255, 0.28);
+            border-left: 2px solid #ff9900; /* PUBG Orange accent */
+            border-radius: 9px;
+            cursor: pointer;
+            box-shadow: 0 6px 22px rgba(0,0,0,.42);
+            backdrop-filter: blur(12px);
+        }
+
+        .menu-toggle span {
+            display: block;
+            width: 21px;
+            height: 2px;
+            background: #fff;
+            border-radius: 2px;
+        }
+
+        .menu-toggle span:nth-child(2) {
+            width: 15px;
+            margin-left: -6px;
+            background: #ff9900;
+        }
+
+        .nav-menu {
+            position: absolute;
+            top: 51px;
+            left: 0;
+            width: 175px;
+            padding: 5px;
+            background: rgba(7, 7, 10, 0.93);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255,255,255,.18);
+            border-radius: 9px;
+            display: none;
+            flex-direction: column;
+        }
+
+        .nav-menu.active {
+            display: flex;
+        }
+
+        .nav-menu a {
+            color: rgba(255,255,255,.92);
+            text-decoration: none;
+            padding: 11px 13px;
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            border-radius: 5px;
+            border-bottom: 1px solid rgba(255,255,255,.07);
+        }
+
+        .nav-menu a:hover {
+            background: rgba(255, 153, 0, 0.15);
+            color: #ff9900;
+        }
+
+        /* =========================
+           PUBG SQUAD ROSTER SECTION
+        ========================== */
+        .content-wrap {
+            position: relative;
+            z-index: 2;
+            flex: 1;
+            max-width: 1350px;
+            width: 92%;
+            margin: 20px auto 40px auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .roster-header {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .section-title {
+            font-size: 32px;
+            font-weight: 900;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #fff;
+            text-shadow: 0 3px 12px rgba(0,0,0,0.8);
+            font-family: 'Impact', Charcoal, sans-serif;
+            margin-bottom: 6px;
+        }
+
+        .section-subtitle {
+            font-size: 13px;
+            letter-spacing: 4px;
+            color: #ff9900;
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+
+        /* 3D Perspective Grid Container */
+        .players-grid {
+            perspective: 1000px;
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 22px;
+            justify-content: center;
+            align-items: stretch;
+        }
+
+        @media (max-width: 1150px) {
+            .players-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 750px) {
+            .players-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .players-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* 3D Hover Effect Card */
+        .player-card {
+            background: linear-gradient(145deg, rgba(25, 25, 35, 0.90) 0%, rgba(12, 12, 18, 0.95) 100%);
+            border: 1px solid rgba(255, 153, 0, 0.25);
+            border-radius: 6px;
+            overflow: hidden;
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.7);
+            display: flex;
+            flex-direction: column;
+            transform-style: preserve-3d;
+            transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.4s ease, box-shadow 0.4s ease;
+            position: relative;
+        }
+
+        /* Tactical military corner cuts simulation */
+        .player-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            border-width: 0 15px 15px 0;
+            border-style: solid;
+            border-color: #ff9900 rgba(0,0,0,0);
+            z-index: 5;
+            transition: border-color 0.3s ease;
+        }
+
+        .player-card:hover {
+            transform: translateY(-8px) rotateX(4deg) rotateY(-4deg);
+            border-color: #ff9900;
+            box-shadow: 0 20px 45px rgba(255, 153, 0, 0.2), 0 0 25px rgba(0,0,0,0.9);
+        }
+
+        .player-img-container {
+            width: 100%;
+            height: 230px;
+            background: #0d0d12;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Subtle tactical scanline overlay on player image */
+        .player-img-container::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.3) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+            background-size: 100% 4px, 6px 100%;
+            z-index: 2;
+            pointer-events: none;
+            opacity: 0.6;
+        }
+
+        .player-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: top center;
+            filter: contrast(1.1) saturate(1.05);
+            transition: transform 0.5s ease;
+        }
+
+        .player-card:hover .player-img {
+            transform: scale(1.08);
+        }
+
+        .player-info {
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            text-align: center;
+            background: rgba(10, 10, 14, 0.95);
+        }
+
+        .player-name {
+            font-size: 17px;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 2px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .player-role {
+            font-size: 11px;
+            font-weight: 700;
+            color: #ff9900;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 14px;
+        }
+
+        /* PUBG Style Instagram Button */
+        .insta-btn {
+            margin-top: auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 7px;
+            padding: 9px 12px;
+            background: linear-gradient(135deg, #ff7700 0%, #ff3300 100%);
+            color: white;
+            text-decoration: none;
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-radius: 4px;
+            box-shadow: 0 4px 15px rgba(255, 119, 0, 0.3);
+            transition: all 0.2s ease;
+        }
+
+        .insta-btn:hover {
+            background: linear-gradient(135deg, #ff8811, #ff4411);
+            box-shadow: 0 6px 20px rgba(255, 119, 0, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .insta-btn svg {
+            width: 15px;
+            height: 15px;
+            fill: currentColor;
+        }
+
+        /* =========================
+           SITE FOOTER
+        ========================== */
+        .site-footer {
+            position: relative;
+            width: 100%;
+            z-index: 10;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 24px;
+            background: rgba(10, 10, 15, 0.90);
+            backdrop-filter: blur(12px);
+            border-top: 1px solid rgba(255, 255, 255, 0.15);
+            color: #fff;
+            font-size: 12px;
+        }
+
+        .footer-logo-area {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .footer-logo {
+            width: 28px;
+            height: auto;
+        }
+
+        .footer-brand {
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .footer-links a:hover {
+            color: #ff9900;
+        }
+
+        .footer-copy {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 11px;
+        }
+
+        @media (max-width: 768px) {
+            .site-footer {
+                flex-direction: column;
+                gap: 10px;
+                text-align: center;
+            }
+            .footer-links {
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="page-container">
+        <!-- DARK OVERLAY -->
+        <div class="overlay"></div>
+
+        <!-- TOP NAVIGATION MENU -->
+        <div class="menu-container">
+            <button class="menu-toggle" id="menuToggle" aria-label="Toggle Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <nav class="nav-menu" id="navMenu">
+                <a href="index.html">Home</a>
+                
+                <a href="about.html">About</a>
+                 <a href="achivement.html">Achievements</a>
+                 <a href="Unknown Facts.html">Unknown Facts</a>
+                <a href="player.html">Players</a>
+                <a href="Review.html">Review</a>
+            </nav>
+        </div>
+
+        <!-- LOGO -->
+        <div class="logo-container">
+            <img src="logo.png" alt="Outrage Esport" class="logo">
+        </div>
+
+        <!-- MAIN PUBG SQUAD ROSTER SECTION -->
+        <main class="content-wrap">
+            <div class="roster-header">
+                <h1 class="section-title">Battleground Roster</h1>
+                <p class="section-subtitle">Outrage Esport BGMI Squad</p>
+            </div>
+
+            <div class="players-grid">
+                
+                <!-- PLAYER 1 -->
+                <div class="player-card">
+                    <div class="player-img-container">
+                        <img src="player/omega.png" alt="Player 1" class="player-img">
+                    </div>
+                    <div class="player-info">
+                        <h2 class="player-name">OMEGA</h2>
+                        <span class="player-role">IGL / Leader</span>
+                        <a href="https://www.instagram.com/outrage.omega/" target="_blank" class="insta-btn">
+                            <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                            Instagram
+                        </a>
+                    </div>
+                </div>
+
+                <!-- PLAYER 2 -->
+                <div class="player-card">
+                    <div class="player-img-container">
+                        <img src="player/ninjaboi.png" alt="Player 2" class="player-img">
+                    </div>
+                    <div class="player-info">
+                        <h2 class="player-name">NINJABOI</h2>
+                        <span class="player-role">ASSAULTER</span>
+                        <a href="https://www.instagram.com/ninjaboi_tanjot/" target="_blank" class="insta-btn">
+                            <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                            Instagram
+                        </a>
+                    </div>
+                </div>
+
+                <!-- PLAYER 3 -->
+                <div class="player-card">
+                    <div class="player-img-container">
+                        <img src="player/knight.png" alt="Player 3" class="player-img">
+                    </div>
+                    <div class="player-info">
+                        <h2 class="player-name">Knight</h2>
+                        <span class="player-role">ASSAULTER</span>
+                        <a href="https://www.instagram.com/knight_tanmayy/" target="_blank" class="insta-btn">
+                            <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                            Instagram
+                        </a>
+                    </div>
+                </div>
+
+                <!-- PLAYER 4 -->
+                <div class="player-card">
+                    <div class="player-img-container">
+                        <img src="player/slug.png" alt="Player 4" class="player-img">
+                    </div>
+                    <div class="player-info">
+                        <h2 class="player-name">Slug</h2>
+                        <span class="player-role">FILTER ASSAULTER</span>
+                        <a href="https://www.instagram.com/slug_raghuraj/" target="_blank" class="insta-btn">
+                            <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                            Instagram
+                        </a>
+                    </div>
+                </div>
+
+                <!-- PLAYER 5 -->
+                <div class="player-card">
+                    <div class="player-img-container">
+                        <img src="player/amit.png" alt="Player 5" class="player-img">
+                    </div>
+                    <div class="player-info">
+                        <h2 class="player-name">Amit</h2>
+                        <span class="player-role">COACH</span>
+                        <a href="https://www.instagram.com/amitdubeyxd/" target="_blank" class="insta-btn">
+                            <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                            Instagram
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+
+        <!-- SITE FOOTER -->
+        <footer class="site-footer">
+            <div class="footer-logo-area">
+                <img src="logo.png" alt="Logo" class="footer-logo">
+                <span class="footer-brand">Outrage Esport</span>
+            </div>
+            
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                
+                <a href="about.html">About</a>
+                 <a href="achivement.html">Achievements</a>
+                <a href="player.html">Players</a>
+                <a href="Review.html">Review</a>
+            </div>
+
+            <div class="footer-copy">
+                &copy; 2026 Kasukabe Nation. All rights reserved. {AP}
+            </div>
+        </footer>
+    </div>
+
+    <!-- MENU SCRIPT -->
+    <script>
+        const menuToggle = document.getElementById("menuToggle");
+        const navMenu = document.getElementById("navMenu");
+
+        menuToggle.addEventListener("click", function (event) {
+            event.stopPropagation();
+            navMenu.classList.toggle("active");
+        });
+
+        document.addEventListener("click", function () {
+            navMenu.classList.remove("active");
+        });
+    </script>
+</body>
+</html>

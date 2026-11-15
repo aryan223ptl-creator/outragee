@@ -1,0 +1,1358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NinjaBoi, Slug &amp; Knight — Unknown Facts | Outrage Esport</title>
+
+    <style>
+        /* =========================
+           BASIC RESET
+        ========================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            width: 100%;
+            min-height: 100%;
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #08080c;
+            color: #ffffff;
+        }
+
+        /* =========================
+           HOMEPAGE BACKGROUND
+        ========================== */
+        .homepage {
+            position: relative;
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+
+            background-image: url("background.png");
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+        }
+
+        @media (max-width: 768px) {
+            .homepage {
+                background-image: url("background-mobile.png");
+                background-size: cover;
+                background-position: center;
+            }
+        }
+
+        /* =========================
+           DARK OVERLAY
+        ========================== */
+        .overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(8, 8, 12, 0.72);
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        /* =========================
+           LOGO
+        ========================== */
+        .logo-container {
+            position: relative;
+            top: 14px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            margin-bottom: 24px;
+        }
+
+        .logo {
+            width: min(130px, 35vw);
+            max-width: 130px;
+            height: auto;
+            filter: drop-shadow(0 4px 24px rgba(0, 0, 0, 0.5));
+        }
+
+        /* =========================
+           TOP LEFT CLOCK
+        ========================== */
+        .clock {
+            position: fixed;
+            left: 20px;
+            top: 20px;
+            z-index: 20;
+            font-size: 14px;
+            font-weight: 500;
+            font-variant-numeric: tabular-nums;
+            color: white;
+            text-shadow: 0 1px 6px rgba(0, 0, 0, 0.5);
+        }
+
+        .clock-colon {
+            animation: blink 1s step-end infinite;
+        }
+
+        .clock-period {
+            margin-left: 6px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+
+        /* =========================
+           COMPACT ESPORTS MENU
+        ========================== */
+        .menu-container {
+            position: fixed;
+            left: 20px;
+            top: 58px;
+            z-index: 50;
+        }
+
+        .menu-toggle {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            width: 44px;
+            height: 44px;
+            padding: 0;
+            background: rgba(8, 8, 12, 0.72);
+            border: 1px solid rgba(255, 255, 255, 0.28);
+            border-left: 2px solid #ff3030;
+            border-radius: 9px;
+            cursor: pointer;
+            box-shadow: 0 6px 22px rgba(0,0,0,.42), inset 0 1px 0 rgba(255,255,255,.12);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+        }
+
+        .menu-toggle span {
+            display: block;
+            width: 21px;
+            height: 2px;
+            background: #fff;
+            border-radius: 2px;
+            box-shadow: 0 0 7px rgba(255,255,255,.3);
+            transition: .25s ease;
+        }
+
+        .menu-toggle span:nth-child(2) {
+            width: 15px;
+            margin-left: -6px;
+            background: #ff3030;
+        }
+
+        .menu-toggle:hover {
+            transform: translateY(-1px);
+            border-color: rgba(255,255,255,.5);
+            box-shadow: 0 8px 26px rgba(0,0,0,.5), 0 0 16px rgba(255,48,48,.16);
+        }
+
+        .nav-menu {
+            position: absolute;
+            top: 51px;
+            left: 0;
+            width: 175px;
+            padding: 5px;
+            background: rgba(7, 7, 10, 0.93);
+            backdrop-filter: blur(16px) saturate(140%);
+            -webkit-backdrop-filter: blur(16px) saturate(140%);
+            border: 1px solid rgba(255,255,255,.18);
+            border-radius: 9px;
+            overflow: hidden;
+            box-shadow: 0 14px 35px rgba(0,0,0,.52);
+            display: none;
+            flex-direction: column;
+        }
+
+        .nav-menu.active {
+            display: flex;
+            animation: menuDrop .18s ease-out;
+        }
+
+        @keyframes menuDrop {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .nav-menu a {
+            color: rgba(255,255,255,.92);
+            text-decoration: none;
+            padding: 11px 13px;
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            border-radius: 5px;
+            border-bottom: 1px solid rgba(255,255,255,.07);
+            transition: background .18s ease, padding-left .18s ease;
+        }
+
+        .nav-menu a:last-child { border-bottom: none; }
+
+        .nav-menu a:hover {
+            padding-left: 17px;
+            background: rgba(255,48,48,.13);
+            color: #fff;
+        }
+
+        /* =========================
+           LIVE VIEWERS
+        ========================== */
+        .live-viewers {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 20;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 14px;
+            color: white;
+            font-size: 13px;
+            font-weight: 600;
+            background: rgba(0, 0, 0, 0.35);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 999px;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+        }
+
+        .live-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #38d39f;
+            box-shadow: 0 0 0 0 rgba(56, 211, 159, 0.7);
+            animation: livePulse 1.5s infinite;
+        }
+
+        @keyframes livePulse {
+            0% { box-shadow: 0 0 0 0 rgba(56, 211, 159, 0.7); }
+            70% { box-shadow: 0 0 0 8px rgba(56, 211, 159, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(56, 211, 159, 0); }
+        }
+
+        /* =========================
+           PLAYER SWITCHER TABS
+        ========================== */
+        .player-tabs {
+            position: relative;
+            z-index: 10;
+            width: min(960px, calc(100vw - 40px));
+            margin: 0 auto 18px auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+
+        @media (max-width: 768px) {
+            .player-tabs {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .tab-btn {
+            padding: 14px 16px;
+            background: rgba(14, 14, 20, 0.72);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 11px;
+            color: rgba(255, 255, 255, 0.75);
+            font-size: 13px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: center;
+        }
+
+        .tab-btn:hover {
+            border-color: rgba(255, 48, 48, 0.5);
+            color: #ffffff;
+        }
+
+        .tab-btn.active {
+            background: rgba(255, 48, 48, 0.18);
+            border-color: #ff3030;
+            color: #ffffff;
+            box-shadow: 0 6px 24px rgba(255, 48, 48, 0.22);
+        }
+
+        .tab-btn span {
+            display: block;
+            font-size: 11px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.6);
+            margin-top: 3px;
+            letter-spacing: 0.4px;
+            text-transform: none;
+        }
+
+        .tab-btn.active span {
+            color: rgba(255, 255, 255, 0.85);
+        }
+
+        /* =========================
+           PLAYER DOSSIER & UNKNOWN FACTS
+        ========================== */
+        .dossier-wrapper {
+            position: relative;
+            z-index: 10;
+            width: min(960px, calc(100vw - 40px));
+            margin: 0 auto 40px auto;
+            display: flex;
+            flex-direction: column;
+            gap: 22px;
+        }
+
+        .player-profile {
+            display: none;
+            flex-direction: column;
+            gap: 22px;
+            animation: fadeIn 0.25s ease-out;
+        }
+
+        .player-profile.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .glass-card {
+            background: rgba(14, 14, 20, 0.72);
+            backdrop-filter: blur(18px) saturate(140%);
+            -webkit-backdrop-filter: blur(18px) saturate(140%);
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            border-radius: 14px;
+            padding: 26px;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+        }
+
+        /* Hero Header */
+        .player-hero {
+            border-left: 4px solid #ff3030;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .player-tag {
+            display: inline-block;
+            width: fit-content;
+            padding: 4px 10px;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: #ff3030;
+            background: rgba(255, 48, 48, 0.14);
+            border: 1px solid rgba(255, 48, 48, 0.35);
+            border-radius: 6px;
+        }
+
+        .player-hero h1 {
+            font-size: clamp(26px, 4vw, 38px);
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            line-height: 1.15;
+        }
+
+        .player-hero h1 span {
+            color: #ff3030;
+        }
+
+        .player-bio {
+            font-size: 14px;
+            line-height: 1.65;
+            color: rgba(255, 255, 255, 0.82);
+        }
+
+        .team-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 4px;
+        }
+
+        .team-pill {
+            font-size: 11px;
+            font-weight: 700;
+            padding: 5px 11px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: rgba(255, 255, 255, 0.85);
+        }
+
+        .team-pill.active-team {
+            background: rgba(255, 48, 48, 0.2);
+            border-color: #ff3030;
+            color: #ffffff;
+        }
+
+        /* Section Titles */
+        .section-heading {
+            font-size: 16px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-heading::before {
+            content: "";
+            display: inline-block;
+            width: 4px;
+            height: 18px;
+            background: #ff3030;
+            border-radius: 2px;
+        }
+
+        /* Unknown Facts Grid */
+        .facts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+            gap: 16px;
+        }
+
+        .fact-item {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 18px;
+            transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+        }
+
+        .fact-item:hover {
+            transform: translateY(-3px);
+            border-color: rgba(255, 48, 48, 0.55);
+            background: rgba(255, 48, 48, 0.06);
+        }
+
+        .fact-number {
+            font-size: 11px;
+            font-weight: 800;
+            color: #ff3030;
+            letter-spacing: 1px;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+        }
+
+        .fact-title {
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #ffffff;
+        }
+
+        .fact-desc {
+            font-size: 13px;
+            line-height: 1.55;
+            color: rgba(255, 255, 255, 0.76);
+        }
+
+        /* LAN & Awards Breakdown Grid */
+        .stats-split {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .stats-split {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .stat-highlight {
+            display: flex;
+            align-items: baseline;
+            gap: 12px;
+            margin-bottom: 16px;
+            padding-bottom: 14px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .stat-big {
+            font-size: 32px;
+            font-weight: 800;
+            color: #ff3030;
+        }
+
+        .stat-sub {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.78);
+            line-height: 1.4;
+        }
+
+        .year-list, .award-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .year-list li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+            padding: 9px 12px;
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 7px;
+            border-left: 2px solid rgba(255, 48, 48, 0.7);
+        }
+
+        .year-list li span:last-child {
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        .award-list li {
+            font-size: 13px;
+            line-height: 1.5;
+            padding: 11px 13px;
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 7px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .award-event {
+            display: block;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 2px;
+        }
+
+        .award-badge {
+            color: #38d39f;
+            font-weight: 600;
+            font-size: 12px;
+        }
+
+        /* Major Event Breakdown Table */
+        .event-table-wrap {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        .event-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12.5px;
+        }
+
+        .event-table th {
+            text-align: left;
+            padding: 10px 10px;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 0.7px;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.65);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+        }
+
+        .event-table th:not(:first-child),
+        .event-table td:not(:first-child) {
+            text-align: right;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .event-table td {
+            padding: 10px 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+            color: rgba(255, 255, 255, 0.88);
+        }
+
+        .event-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .event-table tr:hover td {
+            background: rgba(255, 48, 48, 0.07);
+        }
+
+        .fpm-pill {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 999px;
+            font-weight: 700;
+            font-size: 11.5px;
+            background: rgba(56, 211, 159, 0.14);
+            color: #38d39f;
+            border: 1px solid rgba(56, 211, 159, 0.3);
+        }
+
+        .table-summary-note {
+            margin-top: 12px;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.72);
+            line-height: 1.5;
+        }
+
+        /* =========================
+           SITE FOOTER STYLING
+        ========================== */
+        .site-footer {
+            position: relative;
+            width: 100%;
+            z-index: 10;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 24px;
+            background: rgba(10, 10, 15, 0.90);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-top: 1px solid rgba(255, 255, 255, 0.15);
+            color: #fff;
+            font-size: 12px;
+        }
+
+        .footer-logo-area {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .footer-logo {
+            width: 28px;
+            height: auto;
+        }
+
+        .footer-brand {
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.2s ease;
+        }
+
+        .footer-links a:hover {
+            color: #ff3030;
+        }
+
+        .ig-broadcast-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: linear-gradient(45deg, #f58529, #dd2a7b, #8134af, #515bd4);
+            color: white !important;
+            padding: 6px 12px;
+            border-radius: 999px;
+            font-size: 11px;
+            font-weight: 700;
+            box-shadow: 0 4px 12px rgba(221, 42, 123, 0.3);
+            transition: transform 0.2s ease, opacity 0.2s ease !important;
+        }
+
+        .ig-broadcast-btn:hover {
+            transform: translateY(-2px);
+            opacity: 0.9;
+        }
+
+        .ig-broadcast-btn svg {
+            width: 14px;
+            height: 14px;
+            fill: currentColor;
+        }
+
+        .footer-copy {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 11px;
+        }
+
+        /* =========================
+           MOBILE RESPONSIVE
+        ========================== */
+        @media (max-width: 768px) {
+            .clock {
+                display: none;
+            }
+
+            .menu-container {
+                left: 15px;
+                top: 20px;
+            }
+
+            .menu-toggle {
+                width: 42px;
+                height: 42px;
+            }
+
+            .nav-menu {
+                width: 165px;
+                top: 49px;
+            }
+
+            .logo-container {
+                top: 12px;
+                margin-bottom: 14px;
+            }
+
+            .logo {
+                width: min(115px, 35vw);
+                max-width: 115px;
+            }
+
+            .live-viewers {
+                top: 15px;
+                right: 15px;
+                padding: 8px 11px;
+                font-size: 11px;
+            }
+
+            .glass-card {
+                padding: 18px;
+            }
+
+            .site-footer {
+                flex-direction: column;
+                gap: 10px;
+                padding: 12px 15px;
+                text-align: center;
+            }
+
+            .footer-links {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 12px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <main class="homepage">
+
+        <div>
+            <!-- DARK OVERLAY -->
+            <div class="overlay"></div>
+
+            <!-- TOP LEFT CLOCK -->
+            <div class="clock" id="clock" aria-label="Current time"></div>
+
+            <!-- TOP LEFT 3-LINE MENU BAR -->
+            <div class="menu-container">
+                <button class="menu-toggle" id="menuToggle" aria-label="Toggle Menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <nav class="nav-menu" id="navMenu">
+                    <a href="index.html">Home</a>
+                    <a href="about.html">About</a>
+                    <a href="achivement.html">Achievements</a>
+                    <a href="player.html">Players</a>
+                    <a href="Review.html">Review</a>
+                </nav>
+            </div>
+
+            <!-- LIVE VIEWER COUNTER -->
+            <div class="live-viewers" id="liveViewers">
+                <span class="live-dot"></span>
+                <span id="viewerCount">45</span> watching now
+            </div>
+
+            <!-- CENTER LOGO -->
+            <div class="logo-container">
+                <img
+                    src="logo.png"
+                    alt="Outrage Esport"
+                    width="930"
+                    height="627"
+                    class="logo"
+                >
+            </div>
+        </div>
+
+        <!-- PLAYER TABS -->
+        <div class="player-tabs">
+            <button type="button" class="tab-btn active" data-target="ninjaboi">
+                Tanjot "NinjaBoi" Singh
+                <span>Assaulter &bull; #4 All-Time LAN</span>
+            </button>
+            <button type="button" class="tab-btn" data-target="slug">
+                Raghuraj "Slug" Singh
+                <span>Assaulter &bull; #14 All-Time LAN</span>
+            </button>
+            <button type="button" class="tab-btn" data-target="knight">
+                Tanmay "Knight" Sipahiya
+                <span>Assaulter &bull; #44 All-Time LAN</span>
+            </button>
+        </div>
+
+        <!-- =========================
+             PLAYER DOSSIER CONTENT
+        ========================== -->
+        <section class="dossier-wrapper">
+
+            <!-- ==========================================
+                 PROFILE 1: NINJABOI
+            =========================================== -->
+            <div class="player-profile active" id="ninjaboi">
+
+                <!-- HERO CARD -->
+                <div class="glass-card player-hero">
+                    <span class="player-tag">Assaulter &bull; Team Outrage</span>
+                    <h1>Tanjot <span>"NinjaBoi"</span> Singh</h1>
+                    <p class="player-bio">
+                        Competed in over 130 published BGMI tournaments across Global Esports, K9 Esports, Divine Gaming, and Team Outrage, carving a reputation as one of Indian esports' deadliest LAN fraggers.
+                    </p>
+                    <div class="team-pills">
+                        <span class="team-pill">Global Esports (2023–2024)</span>
+                        <span class="team-pill">K9 Esports (2024–2026)</span>
+                        <span class="team-pill">Divine Gaming (2026)</span>
+                        <span class="team-pill active-team">Team Outrage (Present)</span>
+                    </div>
+                </div>
+
+                <!-- UNKNOWN FACTS SECTION -->
+                <div class="glass-card">
+                    <h2 class="section-heading">Unknown &amp; Lesser-Known Facts</h2>
+                    <div class="facts-grid">
+
+                        <div class="fact-item">
+                            <div class="fact-number">Fact 01 &bull; Unmatched Efficiency</div>
+                            <div class="fact-title">Highest FPM in the All-Time Top 10</div>
+                            <p class="fact-desc">
+                                While ranked #4 overall in all-time Indian BGMI LAN finishes (928 kills), NinjaBoi holds the highest Finishes-Per-Match rate (1.59 FPM) among everyone in the Top 10—outpacing players with hundreds more matches played.
+                            </p>
+                        </div>
+
+                        <div class="fact-item">
+                            <div class="fact-number">Fact 02 &bull; Triple Crown Sweep</div>
+                            <div class="fact-title">Three Individual Awards in One Event</div>
+                            <p class="fact-desc">
+                                At BGIS 2024 with Global Esports, he didn't just win MVP and Most Finishes—he also swept the <strong>Rampage Award</strong> on the exact same day (June 30, 2024), taking home over $5,398 in solo bonus prizes alone.
+                            </p>
+                        </div>
+
+                        <div class="fact-item">
+                            <div class="fact-number">Fact 03 &bull; Rapid LAN Scaling</div>
+                            <div class="fact-title">Nearly 5x LAN Kill Jump in Three Years</div>
+                            <p class="fact-desc">
+                                His LAN output escalated every single season without a dip—jumping from 86 LAN finishes in 2023 to 105 in 2024, tripling to 314 in 2025, and surging to 423 LAN finishes in 2026.
+                            </p>
+                        </div>
+
+                        <div class="fact-item">
+                            <div class="fact-number">Fact 04 &bull; Brief Underdog Stint</div>
+                            <div class="fact-title">Played Under "Team Omega" Before K9</div>
+                            <p class="fact-desc">
+                                Between leaving Global Esports in October 2024 and officially signing with K9 Esports in November 2024, NinjaBoi briefly competed under the unsponsored banner <strong>Team Omega</strong> in 1M Dynasty and Deepavali BattleMania.
+                            </p>
+                        </div>
+
+                        <div class="fact-item">
+                            <div class="fact-number">Fact 05 &bull; Clutch Specialist</div>
+                            <div class="fact-title">Official BMPS 2025 Best Clutch Winner</div>
+                            <p class="fact-desc">
+                                Beyond pure entry fragging, NinjaBoi proved his late-zone composure by winning the official <strong>Best Clutch</strong> individual award at the Battlegrounds Mobile India Pro Series (BMPS) 2025.
+                            </p>
+                        </div>
+
+                        <div class="fact-item">
+                            <div class="fact-number">Fact 06 &bull; Podium Consistency</div>
+                            <div class="fact-title">27 Podiums Across 130+ Tournaments</div>
+                            <p class="fact-desc">
+                                Across 130 published tournaments, he has secured 27 podium finishes (top 3)—meaning he finishes on the podium in more than 1 out of every 5 events he enters.
+                            </p>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- INDIVIDUAL FINISHES & AWARDS BREAKDOWN -->
+                <div class="stats-split">
+
+                    <!-- LAN RANKINGS -->
+                    <div class="glass-card">
+                        <h2 class="section-heading">All-Time LAN Finishes</h2>
+                        <div class="stat-highlight">
+                            <div class="stat-big">#4</div>
+                            <div class="stat-sub">
+                                <strong>928 Finishes</strong> in 585 matches<br>
+                                <strong>1.59 FPM</strong> (Highest rate in All-Time Top 10)
+                            </div>
+                        </div>
+                        <ul class="year-list">
+                            <li>
+                                <span>2026 LANs (2nd behind Hunterz)</span>
+                                <span>423 Finishes</span>
+                            </li>
+                            <li>
+                                <span>2025 LANs</span>
+                                <span>314 Finishes</span>
+                            </li>
+                            <li>
+                                <span>2024 LANs</span>
+                                <span>105 Finishes</span>
+                            </li>
+                            <li>
+                                <span>2023 LANs</span>
+                                <span>86 Finishes</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- INDIVIDUAL AWARDS -->
+                    <div class="glass-card">
+                        <h2 class="section-heading">Individual Finish Awards</h2>
+                        <ul class="award-list">
+                            <li>
+                                <span class="award-event">Chennai Esports Global Championship (CEGC) 2026</span>
+                                <span class="award-badge">Best FPM (1.91) &bull; 5x Top Fragger (Ongoing)</span>
+                            </li>
+                            <li>
+                                <span class="award-event">ESL Snapdragon Pro Series Season 6 (2025)</span>
+                                <span class="award-badge">#1 Finisher</span>
+                            </li>
+                            <li>
+                                <span class="award-event">BGIS 2024</span>
+                                <span class="award-badge">Most Finishes Award &bull; Tournament MVP</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- ==========================================
+                 PROFILE 2: SLUG
+            =========================================== -->
+            <div class="player-profile" id="slug">
+
+                <!-- HERO CARD -->
+                <div class="glass-card player-hero">
+                    <span class="player-tag">Assaulter &bull; Team Outrage</span>
+                    <h1>Raghuraj <span>"Slug"</span> Singh</h1>
+                    <p class="player-bio">
+                        Playing as an assaulter for Team Outrage alongside NinjaBoi, Knight, and Omega, Slug has competed across Team iNSANE, Global Esports, K9 Esports, Divine Gaming, and Team Outrage—cementing his place among India's top 15 all-time LAN fraggers.
+                    </p>
+                    <div class="team-pills">
+                        <span class="team-pill">Team iNSANE</span>
+                        <span class="team-pill">Global Esports</span>
+                        <span class="team-pill">K9 Esports</span>
+                        <span class="team-pill">Divine Gaming</span>
+                        <span class="team-pill active-team">Team Outrage (Present)</span>
+                    </div>
+                </div>
+
+                <!-- UNKNOWN FACTS SECTION -->
+                <div class="glass-card">
+                    <h2 class="section-heading">Unknown &amp; Lesser-Known Facts</h2>
+                    <div class="facts-grid">
+
+                        <div class="fact-item">
+                            <div class="fact-number">Fact 01 &bull; Unbreakable Core</div>
+                            <div class="fact-title">Four Straight Orgs With NinjaBoi</div>
+                            <p class="fact-desc">
+                                Slug and NinjaBoi form one of BGMI's longest-running assaulter duos—having moved together across four consecutive rosters: Global Esports, K9 Esports, Divine Gaming, and now Team Outrage.
+                            </p>
+                        </div>
+
+                        <div class="fact-item">
+                            <div class="fact-number">Fact 02 &bull; Shared Crown</div>
+                            <div class="fact-title">Tied #1 Finisher at ESL Snapdragon S6</div>
+                            <p class="fact-desc">
+                                At ESL Snapdragon Pro Series Season 6 (2025), Slug matched teammate NinjaBoi to finish as <strong>Finisher #1</strong> while also earning the <strong>Most WWCD #2</strong> individual recognition in the same event.
+                            </p>
+                        </div>
+
+                        <div class="fact-item">
+                            <div class="fact-number">Fact 03 &bull; 82% Career LAN Output</div>
+                            <div class="fact-title">Over Four-Fifths of LAN Kills in Two Years</div>
+                            <p class="fact-desc">
+                                Out of his 723 all-time LAN finishes, 597 kills (over 82%) came during his 2025–2026 surge (274 in 2025 and 323 in 2026), jumping more than 7x from his 45 LAN finishes in 2023.
+                            </p>
+                        </div>
+
+                        <div class="fact-item">
+                            <div class="fact-number">Fact 04 &bull; Knockout Specialist</div>
+                            <div class="fact-title">Back-to-Back Elimination Stage MVPs</div>
+                            <p class="fact-desc">
+                                Before claiming major finals hardware, Slug built a reputation for thriving under elimination pressure—winning <strong>Semi-Finals MVP</strong> at Upthrust Challengers Showdown S2 and <strong>Eliminator Week MVP</strong> at Upthrust India Rising in 2024.
+                            </p>
+                        </div>
+
+                        <div class="fact-item">
+                            <div class="fact-number">Fact 05 &bull; Top-15 LAN Club</div>
+                            <div class="fact-title">#14 All-Time LAN Finisher in India</div>
+                            <p class="fact-desc">
+                                With 723 finishes across 553 LAN matches (1.31 FPM), Slug sits at #14 in Indian BGMI LAN history—giving Team Outrage two active Top-15 all-time LAN fraggers on the same starting roster.
+                            </p>
+                        </div>
+
+                        <div class="fact-item">
+                            <div class="fact-number">Fact 06 &bull; Finals Peaker</div>
+                            <div class="fact-title">Crowned BMPS 2026 Finals MVP</div>
+                            <p class="fact-desc">
+                                Delivering his biggest career individual accolade on the grandest stage, Slug captured the <strong>BMPS 2026 Finals MVP</strong> award after leading his squad through the championship lobby.
+                            </p>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- INDIVIDUAL FINISHES & AWARDS BREAKDOWN -->
+                <div class="stats-split">
+
+                    <!-- LAN RANKINGS -->
+                    <div class="glass-card">
+                        <h2 class="section-heading">All-Time LAN Finishes</h2>
+                        <div class="stat-highlight">
+                            <div class="stat-big">#14</div>
+                            <div class="stat-sub">
+                                <strong>723 Finishes</strong> across 553 matches<br>
+                                <strong>1.31 FPM</strong> Career LAN Average
+                            </div>
+                        </div>
+                        <ul class="year-list">
+                            <li>
+                                <span>2026 LANs</span>
+                                <span>323 Finishes</span>
+                            </li>
+                            <li>
+                                <span>2025 LANs</span>
+                                <span>274 Finishes</span>
+                            </li>
+                            <li>
+                                <span>2024 LANs</span>
+                                <span>81 Finishes</span>
+                            </li>
+                            <li>
+                                <span>2023 LANs</span>
+                                <span>45 Finishes</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- INDIVIDUAL AWARDS -->
+                    <div class="glass-card">
+                        <h2 class="section-heading">Individual Finish &amp; MVP Awards</h2>
+                        <ul class="award-list">
+                            <li>
+                                <span class="award-event">BGMI Pro Series (BMPS) 2026</span>
+                                <span class="award-badge">Finals MVP</span>
+                            </li>
+                            <li>
+                                <span class="award-event">ESL Snapdragon Pro Series Season 6 (2025)</span>
+                                <span class="award-badge">Finisher #1 &bull; Most WWCD #2</span>
+                            </li>
+                            <li>
+                                <span class="award-event">Upthrust Esports Challengers Showdown S2 (2024)</span>
+                                <span class="award-badge">Semi-Finals MVP</span>
+                            </li>
+                            <li>
+                                <span class="award-event">Upthrust Esports India Rising (2024)</span>
+                                <span class="award-badge">Eliminator Week MVP</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- ==========================================
+                 PROFILE 3: KNIGHT
+            =========================================== -->
+            <div class="player-profile" id="knight">
+
+                <!-- HERO CARD -->
+                <div class="glass-card player-hero">
+                    <span class="player-tag">Assaulter &bull; Team Outrage</span>
+                    <h1>Tanmay <span>"Knight"</span> Sipahiya</h1>
+                    <p class="player-bio">
+                        Playing as an assaulter for Team Outrage alongside NinjaBoi, Slug, Omega, and JDGamingYT, Knight broke into Tier-1 BGMI in 2025 and has rapidly climbed the statistical leaderboards across Team H4K, NoNx Esports, K9 Esports, Divine Gaming, and Team Outrage.
+                    </p>
+                    <div class="team-pills">
+                        <span class="team-pill">Team H4K</span>
+                        <span class="team-pill">NoNx Esports</span>
+                        <span class="team-pill">K9 Esports</span>
+                        <span class="team-pill">Divine Gaming</span>
+                        <span class="team-pill active-team">Team Outrage (Present)</span>
+                    </div>
+                </div>
+
+                <!-- UNKNOWN FACTS SECTION -->
+                <div class="glass-card">
+                    <h2 class="section-heading">Unknown &amp; Lesser-Known Facts</h2>
+                    <div class="facts-grid">
+
+                        <div class="fact-item">
+                            <div class="fact-number">Fact 01 &bull; Rapid Top-45 Entry</div>
+                            <div class="fact-title">All-Time #44 LAN Rank in Just Two Seasons</div>
+                            <p class="fact-desc">
+                                Despite only breaking into Tier-1 BGMI in 2025, Knight has already racked up 440 LAN finishes in 368 matches (1.20 FPM)—cracking India's All-Time Top 45 LAN leaderboard faster than almost any newcomer of his generation.
+                            </p>
+                        </div>
+
+                        <div class="fact-item">
+                            <div class="fact-number">Fact 02 &bull; 3.78x Sophomore Explosion</div>
+                            <div class="fact-title">79% of All Career LAN Kills Came in 2026</div>
+                            <p class="fact-desc">
+                                After posting 92 LAN finishes during his 2025 rookie Tier-1 year, Knight nearly quadrupled his LAN output in 2026 with 348 finishes—accounting for 79% of his all-time LAN tally.
+                            </p>
+                        </div>
+
+                        <div class="fact-item">
+                            <div class="fact-number">Fact 03 &bull; Ironclad Domestic Floor</div>
+                            <div class="fact-title">Never Below 1.38 FPM in Any 2026 Domestic Major</div>
+                            <p class="fact-desc">
+                                Across 266 major 2026 tournament matches (388 total finishes at 1.46 FPM), Knight never dipped below a 1.38 FPM average in a single Indian domestic major—spanning BGIS, BMPS, BGMS, BMSD, and CEGC.
+                            </p>
+                        </div>
+
+                        <div class="fact-item">
+                            <div class="fact-number">Fact 04 &bull; Marathon Fragging</div>
+                            <div class="fact-title">263 Finishes Across BGMS &amp; BMSD 2026 Alone</div>
+                            <p class="fact-desc">
+                                In two high-volume 2026 tournaments—BGMI Masters Series (153 finishes in 106 matches) and BGMI Showdown (110 finishes in 70 matches at 1.57 FPM)—Knight delivered 263 kills in 176 games.
+                            </p>
+                        </div>
+
+                        <div class="fact-item">
+                            <div class="fact-number">Fact 05 &bull; Peak Form Entering Outrage</div>
+                            <div class="fact-title">Career-Best 1.58 FPM Pace at CEGC 2026</div>
+                            <p class="fact-desc">
+                                In the ongoing Chennai Esports Global Championship (CEGC) 2026, Knight is operating at a tournament-best 1.58 FPM (19 finishes in 12 matches)—his sharpest scoring efficiency of the 2026 calendar.
+                            </p>
+                        </div>
+
+                        <div class="fact-item">
+                            <div class="fact-number">Fact 06 &bull; Three-Org Core</div>
+                            <div class="fact-title">Teamed With NinjaBoi &amp; Slug Across Three Banners</div>
+                            <p class="fact-desc">
+                                Following early stints with Team H4K and NoNx Esports, Knight linked up with NinjaBoi and Slug at K9 Esports, carried the core through Divine Gaming, and reunited under Team Outrage.
+                            </p>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- INDIVIDUAL FINISHES & 2026 MAJOR BREAKDOWN -->
+                <div class="stats-split">
+
+                    <!-- LAN RANKINGS -->
+                    <div class="glass-card">
+                        <h2 class="section-heading">All-Time LAN Finishes</h2>
+                        <div class="stat-highlight">
+                            <div class="stat-big">#44</div>
+                            <div class="stat-sub">
+                                <strong>440 Finishes</strong> across 368 matches<br>
+                                <strong>1.20 FPM</strong> Career LAN Average
+                            </div>
+                        </div>
+                        <ul class="year-list">
+                            <li>
+                                <span>2026 LANs (79% of Career Total)</span>
+                                <span>348 Finishes</span>
+                            </li>
+                            <li>
+                                <span>2025 LANs (Tier-1 Debut Year)</span>
+                                <span>92 Finishes</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- 2026 MAJOR EVENTS TABLE -->
+                    <div class="glass-card">
+                        <h2 class="section-heading">2026 Official &amp; Major Events</h2>
+                        <div class="event-table-wrap">
+                            <table class="event-table">
+                                <thead>
+                                    <tr>
+                                        <th>2026 Event</th>
+                                        <th>Finishes</th>
+                                        <th>Matches</th>
+                                        <th>FPM</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>CEGC 2026 (Ongoing)</td>
+                                        <td>19</td>
+                                        <td>12</td>
+                                        <td><span class="fpm-pill">1.58</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>BGMI Showdown (BMSD) 2026</td>
+                                        <td>110</td>
+                                        <td>70</td>
+                                        <td><span class="fpm-pill">1.57</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>BGMI Masters Series (BGMS) 2026</td>
+                                        <td>153</td>
+                                        <td>106</td>
+                                        <td><span class="fpm-pill">1.44</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>BGMI India Series (BGIS) 2026</td>
+                                        <td>26</td>
+                                        <td>18</td>
+                                        <td><span class="fpm-pill">1.44</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>BGMI Pro Series (BMPS) 2026</td>
+                                        <td>58</td>
+                                        <td>42</td>
+                                        <td><span class="fpm-pill">1.38</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>BGMI International Cup (BMIC) 2026</td>
+                                        <td>22</td>
+                                        <td>18</td>
+                                        <td><span class="fpm-pill">1.22</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <p class="table-summary-note">
+                            <strong>Total 2026 Majors:</strong> 388 finishes across 266 matches (<strong>1.46 FPM</strong>)—maintaining over 1.38 FPM in every domestic major.
+                        </p>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- =========================
+             SITE FOOTER
+        ========================== -->
+        <footer class="site-footer">
+            <div class="footer-logo-area">
+                <img src="logo.png" alt="Logo" class="footer-logo">
+                <span class="footer-brand">Outrage Esport</span>
+            </div>
+
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="achivement.html">Achievements</a>
+                <a href="player.html">Players</a>
+                <a href="Review.html">Review</a>
+                <a href="https://www.instagram.com/channel/AbYtG34xFTxatx3b/" target="_blank" class="ig-broadcast-btn" aria-label="Instagram Broadcast Channel">
+                    <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                    Broadcast
+                </a>
+            </div>
+
+            <div class="footer-copy">
+                &copy; 2026 Kasukabe Nation. All rights reserved. {AP}
+            </div>
+        </footer>
+
+    </main>
+
+    <script>
+        /* PLAYER TAB SWITCHER */
+        const tabButtons = document.querySelectorAll(".tab-btn");
+        const playerProfiles = document.querySelectorAll(".player-profile");
+
+        tabButtons.forEach((btn) => {
+            btn.addEventListener("click", () => {
+                tabButtons.forEach((b) => b.classList.remove("active"));
+                playerProfiles.forEach((p) => p.classList.remove("active"));
+
+                btn.classList.add("active");
+                const targetId = btn.getAttribute("data-target");
+                document.getElementById(targetId).classList.add("active");
+            });
+        });
+
+        /* LIVE CLOCK */
+        const clock = document.getElementById("clock");
+
+        function updateClock() {
+            const now = new Date();
+            const hours24 = now.getHours();
+            const hours12 = hours24 % 12 || 12;
+            const minutes = now.getMinutes().toString().padStart(2, "0");
+            const period = hours24 >= 12 ? "pm" : "am";
+
+            clock.innerHTML =
+                `${hours12}<span class="clock-colon">:</span>${minutes}` +
+                `<span class="clock-period">${period}</span>`;
+        }
+
+        updateClock();
+        setInterval(updateClock, 1000);
+
+        /* 3-LINE MENU TOGGLE */
+        const menuToggle = document.getElementById("menuToggle");
+        const navMenu = document.getElementById("navMenu");
+
+        menuToggle.addEventListener("click", function (event) {
+            event.stopPropagation();
+            navMenu.classList.toggle("active");
+        });
+
+        document.addEventListener("click", function () {
+            navMenu.classList.remove("active");
+        });
+
+        /* LIVE VIEWER DISPLAY */
+        const viewerCount = document.getElementById("viewerCount");
+        let displayedViewers = Math.floor(Math.random() * 71) + 30;
+        viewerCount.textContent = displayedViewers;
+
+        function updateViewerCount() {
+            const newViewers = Math.floor(Math.random() * 71) + 30;
+            displayedViewers = newViewers;
+            viewerCount.textContent = displayedViewers;
+        }
+
+        setInterval(updateViewerCount, 10000);
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Outrage Esport | Career Journey & Achievements (2025-2026)</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800;900&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-deep: #121212;
+            --accent-k9: #ff334b;
+            --accent-divine: #00ffcc;
+            --accent-outrage: #ff9900;
+            --text-main: #ffffff;
+            --text-muted: rgba(255, 255, 255, 0.85);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            width: 100%;
+            min-height: 100%;
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: var(--bg-deep);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        /* =========================
+           TOP LEFT CLOCK
+        ========================== */
+        .clock {
+            position: fixed;
+            left: 20px;
+            top: 20px;
+            z-index: 20;
+            font-size: 14px;
+            font-weight: 500;
+            font-variant-numeric: tabular-nums;
+            color: white;
+            text-shadow: 0 1px 6px rgba(0, 0, 0, 0.5);
+        }
+
+        .clock-colon {
+            animation: blink 1s step-end infinite;
+        }
+
+        .clock-period {
+            margin-left: 6px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+
+        /* =========================
+           COMPACT ESPORTS MENU
+        ========================== */
+        .menu-container {
+            position: fixed;
+            left: 20px;
+            top: 58px;
+            z-index: 50;
+        }
+
+        .menu-toggle {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            width: 44px;
+            height: 44px;
+            padding: 0;
+            background: rgba(8, 8, 12, 0.72);
+            border: 1px solid rgba(255, 255, 255, 0.28);
+            border-left: 2px solid #ff3030;
+            border-radius: 9px;
+            cursor: pointer;
+            box-shadow: 0 6px 22px rgba(0,0,0,.42), inset 0 1px 0 rgba(255,255,255,.12);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+        }
+
+        .menu-toggle span {
+            display: block;
+            width: 21px;
+            height: 2px;
+            background: #fff;
+            border-radius: 2px;
+            box-shadow: 0 0 7px rgba(255,255,255,.3);
+            transition: .25s ease;
+        }
+
+        .menu-toggle span:nth-child(2) {
+            width: 15px;
+            margin-left: -6px;
+            background: #ff3030;
+        }
+
+        .menu-toggle:hover {
+            transform: translateY(-1px);
+            border-color: rgba(255,255,255,.5);
+            box-shadow: 0 8px 26px rgba(0,0,0,.5), 0 0 16px rgba(255,48,48,.16);
+        }
+
+        .nav-menu {
+            position: absolute;
+            top: 51px;
+            left: 0;
+            width: 175px;
+            padding: 5px;
+            background: rgba(7, 7, 10, 0.93);
+            backdrop-filter: blur(16px) saturate(140%);
+            -webkit-backdrop-filter: blur(16px) saturate(140%);
+            border: 1px solid rgba(255,255,255,.18);
+            border-radius: 9px;
+            overflow: hidden;
+            box-shadow: 0 14px 35px rgba(0,0,0,.52);
+            display: none;
+            flex-direction: column;
+        }
+
+        .nav-menu.active {
+            display: flex;
+            animation: menuDrop .18s ease-out;
+        }
+
+        @keyframes menuDrop {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .nav-menu a {
+            color: rgba(255,255,255,.92);
+            text-decoration: none;
+            padding: 11px 13px;
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            border-radius: 5px;
+            border-bottom: 1px solid rgba(255,255,255,.07);
+            transition: background .18s ease, padding-left .18s ease;
+        }
+
+        .nav-menu a:last-child { border-bottom: none; }
+
+        .nav-menu a:hover, .nav-menu a.active {
+            padding-left: 17px;
+            background: rgba(255,48,48,.13);
+            color: #fff;
+        }
+
+        /* =========================
+           LIVE VIEWERS
+        ========================== */
+        .live-viewers {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 20;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 14px;
+            color: white;
+            font-size: 13px;
+            font-weight: 600;
+            background: rgba(0, 0, 0, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 999px;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+        }
+
+        .live-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #38d39f;
+            box-shadow: 0 0 0 0 rgba(56, 211, 159, 0.7);
+            animation: livePulse 1.5s infinite;
+        }
+
+        @keyframes livePulse {
+            0% { box-shadow: 0 0 0 0 rgba(56, 211, 159, 0.7); }
+            70% { box-shadow: 0 0 0 8px rgba(56, 211, 159, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(56, 211, 159, 0); }
+        }
+
+        /* =========================
+           PAGE BACKGROUND & CONTAINER STYLE
+        ========================== */
+        .achievements-page {
+            position: relative;
+            width: 100%;
+            min-height: 100vh;
+            background-image: url("background.png");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 60px 20px;
+        }
+
+        @media (max-width: 768px) {
+            .achievements-page {
+                background-image: url("background-mobile.png");
+            }
+        }
+
+        .overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.65);
+            z-index: 1;
+        }
+
+        .content-container {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            max-width: 900px;
+            background: rgba(255, 255, 255, 0.10);
+            backdrop-filter: blur(24px) saturate(150%);
+            -webkit-backdrop-filter: blur(24px) saturate(150%);
+            border: 1px solid rgba(255, 255, 255, 0.20);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.45);
+            text-align: center;
+        }
+
+        /* Headings & Text */
+        h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+            color: #ffffff;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.30);
+            text-transform: uppercase;
+        }
+
+        .tagline {
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: #ffdf7e;
+            margin-bottom: 24px;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+        }
+
+        p {
+            font-size: 15px;
+            color: var(--text-muted);
+            margin-bottom: 24px;
+        }
+
+        /* Era Filter Tabs */
+        .team-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-family: Arial, sans-serif;
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+            transition: transform 0.2s ease, background 0.2s ease;
+        }
+
+        .tab-btn:hover, .tab-btn.active {
+            transform: scale(1.05);
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .tab-btn[data-team="k9"].active { border-color: var(--accent-k9); box-shadow: 0 0 12px rgba(255, 51, 75, 0.4); }
+        .tab-btn[data-team="divine"].active { border-color: var(--accent-divine); box-shadow: 0 0 12px rgba(0, 255, 204, 0.4); }
+        .tab-btn[data-team="outrage"].active { border-color: var(--accent-outrage); box-shadow: 0 0 12px rgba(255, 153, 0, 0.4); }
+
+        /* Services/MVP Style Box */
+        .services-box {
+            background: rgba(0, 0, 0, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 30px;
+            text-align: left;
+        }
+
+        .services-box h3 {
+            font-size: 15px;
+            margin-bottom: 15px;
+            color: #ffffff;
+            text-align: center;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .mvp-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 15px;
+        }
+
+        .mvp-card {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 10px;
+            padding: 12px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .mvp-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #222;
+            border: 2px solid #ffd700;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+
+        .mvp-info h4 {
+            font-size: 15px;
+            color: #fff;
+            margin-bottom: 2px;
+        }
+
+        .mvp-info .badge {
+            display: inline-block;
+            background: rgba(255, 215, 0, 0.2);
+            color: #ffd700;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 2px 6px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
+        .mvp-info p {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.7);
+            margin: 0;
+        }
+
+        /* Achievements Timeline Grid */
+        .timeline-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 18px;
+            margin-bottom: 30px;
+            text-align: left;
+        }
+
+        .achievement-card {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+
+        .achievement-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+
+        .card-img-container {
+            width: 100%;
+            height: 140px;
+            background: #111;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-img-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .rank-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-weight: 800;
+            font-size: 11px;
+            text-transform: uppercase;
+            backdrop-filter: blur(6px);
+        }
+
+        .rank-1 { background: #ffd700; color: #000; }
+        .rank-2 { background: #e2e8f0; color: #000; }
+        .rank-3 { background: #cd7f32; color: #fff; }
+        .rank-other { background: rgba(0,0,0,0.8); color: #fff; border: 1px solid rgba(255,255,255,0.2); }
+
+        .card-content {
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            justify-content: space-between;
+        }
+
+        .team-tag {
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 6px;
+        }
+
+        .tag-k9 { color: var(--accent-k9); }
+        .tag-divine { color: var(--accent-divine); }
+        .tag-outrage { color: var(--accent-outrage); }
+
+        .tournament-title {
+            font-size: 15px;
+            font-weight: 700;
+            line-height: 1.3;
+            color: white;
+            margin-bottom: 10px;
+        }
+
+        .tournament-meta {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.7);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 10px;
+        }
+
+        /* Back Button Style */
+        .back-btn {
+            display: inline-block;
+            padding: 10px 24px;
+            background: white;
+            color: black;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            border-radius: 999px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.30);
+            transition: transform 0.2s ease, background 0.2s ease;
+        }
+
+        .back-btn:hover {
+            transform: scale(1.05);
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .clock { display: none; }
+            .menu-container { left: 15px; top: 20px; }
+            .live-viewers { top: 15px; right: 15px; padding: 8px 11px; font-size: 11px; }
+            .content-container { padding: 20px 15px; }
+            .timeline-grid { grid-template-columns: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- TOP LEFT CLOCK -->
+    <div class="clock" id="clock" aria-label="Current time"></div>
+
+    <!-- TOP LEFT 3-LINE MENU BAR -->
+    <div class="menu-container">
+        <button class="menu-toggle" id="menuToggle" aria-label="Toggle Menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <nav class="nav-menu" id="navMenu">
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="achivement.html" class="active">Achievements</a>
+            <a href="Unknown Facts.html">Unknown Facts</a>
+            <a href="player.html">Players</a>
+            <a href="Review.html">Review</a>
+        </nav>
+    </div>
+
+    <!-- LIVE VIEWER COUNTER -->
+    <div class="live-viewers" id="liveViewers">
+        <span class="live-dot"></span>
+        <span id="viewerCount">45</span> watching now
+    </div>
+
+    <main class="achievements-page">
+        <div class="overlay"></div>
+
+        <div class="content-container">
+            <h1>Career Odyssey &amp; Achievements</h1>
+            <div class="tagline">🔥 CHAMPIONSHIP LEGACY (2025-2026) 🔥</div>
+            
+            <p>Explore the complete tournament journey and trophy collection across K9 Esport, Divine Gaming, and Outrage Esport.</p>
+
+            <!-- Era Filter Tabs -->
+            <div class="team-tabs">
+                <button class="tab-btn active" data-team="all">All Eras</button>
+                <button class="tab-btn" data-team="k9">K9 Esport</button>
+                <button class="tab-btn" data-team="divine">Divine Gaming</button>
+                <button class="tab-btn" data-team="outrage">Outrage Esport</button>
+            </div>
+
+            <!-- Official MVP Honors Box -->
+            <div class="services-box">
+                <h3>Official MVP Honors</h3>
+                <div class="mvp-grid">
+                    <div class="mvp-card">
+                        <img src="ninjaboi1.png" alt="Ninjaboi" class="mvp-avatar" onerror="this.src='https://via.placeholder.com/50?text=MVP'">
+                        <div class="mvp-info">
+                            <h4>Ninjaboi</h4>
+                            <span class="badge">2x Official MVP</span>
+                            <p>BGIS 2024 &amp; BMSD 2025</p>
+                        </div>
+                    </div>
+                    <div class="mvp-card">
+                        <img src="slug.png" alt="Slug" class="mvp-avatar" onerror="this.src='https://via.placeholder.com/50?text=MVP'">
+                        <div class="mvp-info">
+                            <h4>Slug</h4>
+                            <span class="badge">Tournament MVP</span>
+                            <p>BMPS 2026 Champion Run</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Achievements Grid -->
+            <div class="services-box" style="padding: 15px;">
+                <h3>Tournament Standings</h3>
+                <div class="timeline-grid" id="timelineGrid">
+
+                    <!-- K9 Esport Items -->
+                    <div class="achievement-card" data-team="k9">
+                        <div class="card-img-container">
+                            <img src="esl6.jpg" alt="ESL Snapdragon" onerror="this.src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRkJsBqptom0Yyxgrlc2BCZUA8JrMgWUecTfCgA_-UF60zYJPB8xT6UtzBV&s=10'">
+                            <span class="rank-badge rank-2">#2 Runner-Up</span>
+                        </div>
+                        <div class="card-content">
+                            <div>
+                                <div class="team-tag tag-k9">K9 Esport</div>
+                                <h4 class="tournament-title">ESL Snapdragon Pro Series S6</h4>
+                            </div>
+                            <div class="tournament-meta">
+                                <span>2025 Season</span>
+                                <span>Podium Finish</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="achievement-card" data-team="k9">
+                        <div class="card-img-container">
+                            <img src="iqoo.jpg" alt="iQOO BG Series" onerror="this.src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR-XtrzXS39liHFjCG80WxybaZ5d3k6jtU_TbCIw9Vbdg&s=10'">
+                            <span class="rank-badge rank-3">#3 Podium</span>
+                        </div>
+                        <div class="card-content">
+                            <div>
+                                <div class="team-tag tag-k9">K9 Esport</div>
+                                <h4 class="tournament-title">iQOO Battlegrounds Series</h4>
+                            </div>
+                            <div class="tournament-meta">
+                                <span>2025 Season</span>
+                                <span>Top Tier</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="achievement-card" data-team="k9">
+                        <div class="card-img-container">
+                            <img src="bgms4.jpg" alt="BGMS S4" onerror="this.src='https://images.sigma.world/K9-Esports-BGMS-Season-4-trophy-Image-source-NODWIN-Gaming.jpg'">
+                            <span class="rank-badge rank-1">#1 Champion</span>
+                        </div>
+                        <div class="card-content">
+                            <div>
+                                <div class="team-tag tag-k9">K9 Esport</div>
+                                <h4 class="tournament-title">BGMI Masters Series S4</h4>
+                            </div>
+                            <div class="tournament-meta">
+                                <span>2025 Season</span>
+                                <span>Grand Champions</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="achievement-card" data-team="k9">
+                        <div class="card-img-container">
+                            <img src="bmsd2025.jpg" alt="BMSD 2025" onerror="this.src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6_yzx8UKmA-QcfGSy3FliTUAjY-IAVIa_1BDh_Kdkp9JXywIG9sAiQ-c&s=10'">
+                            <span class="rank-badge rank-2">#2 Runner-Up</span>
+                        </div>
+                        <div class="card-content">
+                            <div>
+                                <div class="team-tag tag-k9">K9 Esport</div>
+                                <h4 class="tournament-title">BGMI Showdown 2025</h4>
+                            </div>
+                            <div class="tournament-meta">
+                                <span>2025 Season</span>
+                                <span>Ninjaboi MVP Run</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="achievement-card" data-team="k9">
+                        <div class="card-img-container">
+                            <img src="bmps2025.jpg" alt="BMPS 2025" onerror="this.src='https://forumstatic.oneplusmobile.com/opforum-gl/upload/image/front/thread/20250912/9722434402408627881/1947751602748129280/1947751602748129280.png'">
+                            <span class="rank-badge rank-other">#8 Finish</span>
+                        </div>
+                        <div class="card-content">
+                            <div>
+                                <div class="team-tag tag-k9">K9 Esport</div>
+                                <h4 class="tournament-title">BMPS 2025 Finals</h4>
+                            </div>
+                            <div class="tournament-meta">
+                                <span>2025 Season</span>
+                                <span>National Finalist</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="achievement-card" data-team="k9">
+                        <div class="card-img-container">
+                            <img src="intlcup.jpg" alt="International Cup" onerror="this.src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSmJP9X6yraeGeMaxf1tLYSM5T7LAmxT2o_P5jgaj45LhPZWqU3fJXCYAtI&s=10'">
+                            <span class="rank-badge rank-other">#8 Standings</span>
+                        </div>
+                        <div class="card-content">
+                            <div>
+                                <div class="team-tag tag-k9">K9 Esport</div>
+                                <h4 class="tournament-title">BGMI International Cup</h4>
+                            </div>
+                            <div class="tournament-meta">
+                                <span>2025 Season</span>
+                                <span>Global Stage</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Divine Gaming Item -->
+                    <div class="achievement-card" data-team="divine">
+                        <div class="card-img-container">
+                            <img src="divine_bmps2026.jpg" alt="BMPS 2026 Divine" onerror="this.src='https://static.toiimg.com/thumb/imgsize-1373454,msid-131878762,width-375,resizemode-4/131878762.jpg'">
+                            <span class="rank-badge rank-2">#2 Runner-Up</span>
+                        </div>
+                        <div class="card-content">
+                            <div>
+                                <div class="team-tag tag-divine">Divine Gaming</div>
+                                <h4 class="tournament-title">BMPS 2026 Stint</h4>
+                            </div>
+                            <div class="tournament-meta">
+                                <span>2026 Season</span>
+                                <span>Slug MVP Award</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- K9 Esport Items (Current) -->
+                    <div class="achievement-card" data-team="k9">
+                        <div class="card-img-container">
+                            <img src="bgis2026.jpg" alt="BGIS 2026" onerror="this.src='https://th-i.thgim.com/public/news/national/karnataka/tvgtyt/article70807015.ece/alternates/FREE_1200/1H2A2927.JPG'">
+                            <span class="rank-badge rank-other">#6 Finish</span>
+                        </div>
+                        <div class="card-content">
+                            <div>
+                                <div class="team-tag tag-k9">K9 Esport</div>
+                                <h4 class="tournament-title">BGIS 2026 Finals</h4>
+                            </div>
+                            <div class="tournament-meta">
+                                <span>2026 Season</span>
+                                <span>National Finalist</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Outrage Esport Items -->
+                    <div class="achievement-card" data-team="outrage">
+                        <div class="card-img-container">
+                            <img src="outrage_bmps2026.jpg" alt="BMPS 2026 Outrage" onerror="this.src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR-Do317WXnakrbhAg-Jaf8x3Iqv2lxcyYFMtlQTJu8pw&s=10'">
+                            <span class="rank-badge rank-other">#14</span>
+                        </div>
+                        <div class="card-content">
+                            <div>
+                                <div class="team-tag tag-outrage">Outrage Esport</div>
+                                <h4 class="tournament-title">BGMS Season 5</h4>
+                            </div>
+                            <div class="tournament-meta">
+                                <span>2026 Season</span>
+                                <span>Not The Result We Wanted</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- NEW BOX 1: BMSD 2026 (Replace image src and #RANK) -->
+                    <div class="achievement-card" data-team="outrage">
+                        <div class="card-img-container">
+                            <img src="bmsd2026.jpg" alt="BMSD 2026" onerror="this.src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSS1dO5fn5EsW6CcXlY8DRM8ukOqzQvcZpd2OPQchVJMw&s=10'">
+                            <span class="rank-badge rank-other">#6</span>
+                        </div>
+                        <div class="card-content">
+                            <div>
+                                <div class="team-tag tag-outrage">Outrage Esport</div>
+                                <h4 class="tournament-title">BGMI Showdown 2026 (BMSD)</h4>
+                            </div>
+                            <div class="tournament-meta">
+                                <span>2026 Season</span>
+                                <span>PMGC Global Slot Qualifier</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- NEW BOX 2: BMIC 2026 (Replace image src and #RANK) -->
+                    <div class="achievement-card" data-team="outrage">
+                        <div class="card-img-container">
+                            <img src="bmic2026.jpg" alt="BMIC 2026" onerror="this.src='https://www.talkesport.com/wp-content/uploads/Outrage-BMIC-2026-1068x601.webp'">
+                            <span class="rank-badge rank-other">#5</span>
+                        </div>
+                        <div class="card-content">
+                            <div>
+                                <div class="team-tag tag-outrage">Outrage Esport</div>
+                                <h4 class="tournament-title">BGMI International Cup 2026 (BMIC)</h4>
+                            </div>
+                            <div class="tournament-meta">
+                                <span>2026 Season</span>
+                                <span>PMGC Global Slot Qualifier</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <a href="index.html" class="back-btn">Back to Home</a>
+        </div>
+    </main>
+
+    <!-- Scripts: Clock, Menu Toggle, Era Filter & Live Viewers -->
+    <script>
+        // Era Filter Functionality
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const achievementCards = document.querySelectorAll('.achievement-card');
+
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                tabBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                const selectedTeam = btn.getAttribute('data-team');
+
+                achievementCards.forEach(card => {
+                    if (selectedTeam === 'all' || card.getAttribute('data-team') === selectedTeam) {
+                        card.style.display = 'flex';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // Live Clock Script
+        const clockElement = document.getElementById("clock");
+
+        function updateClock() {
+            const now = new Date();
+            const hours24 = now.getHours();
+            const hours12 = hours24 % 12 || 12;
+            const minutes = now.getMinutes().toString().padStart(2, "0");
+            const period = hours24 >= 12 ? "pm" : "am";
+
+            clockElement.innerHTML =
+                `${hours12}<span class="clock-colon">:</span>${minutes}` +
+                `<span class="clock-period">${period}</span>`;
+        }
+
+        updateClock();
+        setInterval(updateClock, 1000);
+
+        // 3-Line Menu Toggle
+        const menuToggle = document.getElementById("menuToggle");
+        const navMenu = document.getElementById("navMenu");
+
+        menuToggle.addEventListener("click", function (event) {
+            event.stopPropagation();
+            navMenu.classList.toggle("active");
+        });
+
+        document.addEventListener("click", function () {
+            navMenu.classList.remove("active");
+        });
+
+        // Live Viewer Counter Simulator
+        const viewerCount = document.getElementById("viewerCount");
+        let displayedViewers = Math.floor(Math.random() * 71) + 30;
+        viewerCount.textContent = displayedViewers;
+
+        function updateViewerCount() {
+            displayedViewers = Math.floor(Math.random() * 71) + 30;
+            viewerCount.textContent = displayedViewers;
+        }
+
+        setInterval(updateViewerCount, 10000);
+    </script>
+</body>
+</html>
